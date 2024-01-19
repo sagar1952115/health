@@ -7,9 +7,10 @@ const DoctorList = ({ prevStep, handleInputChange, handleSubmit }) => {
   const [selected, setSelected] = useState(null);
   const {
     formData,
-    formData: { doctorName },
+
     setFormData,
   } = useContext(BookingContext);
+
   const handleClick = (name) => {
     setSelected(name);
     setFormData({ ...formData, doctorName: name });
@@ -19,10 +20,15 @@ const DoctorList = ({ prevStep, handleInputChange, handleSubmit }) => {
   } = useContext(BookingContext);
   console.log(city);
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramCity = urlParams.get("city");
+    const cityToSearch = paramCity ? paramCity : city;
+
     const filteredDoctors = doctorsDataArray.filter(
-      (curr) => curr.city === city
+      (curr) => curr.city === cityToSearch
     );
     setDoctors(filteredDoctors);
+    // eslint-disable-next-line
   }, []);
   return (
     <div className="p-2 text-white border rounded-md">
